@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>조건희 ♥ 유가혜 결혼합니다</title>
 <meta name="description" content="2026년 10월 6일 화요일 낮 12시 · 저희 두 사람의 결혼 소식을 전합니다.">
 <!-- 카카오톡/SNS 미리보기 (Open Graph) -->
@@ -32,8 +32,9 @@
   body{
     font-family:'Gowun Batang','Noto Serif KR',serif;
     color:var(--ink);
-    line-height:1.9;
+    line-height:1.95;
     letter-spacing:.01em;
+    -webkit-text-size-adjust:100%;
   }
   .wrap{
     max-width:440px;margin:0 auto;background:var(--bg);
@@ -90,8 +91,8 @@
   .cover-caption .sub{font-size:14px;color:var(--sub);letter-spacing:.1em;}
 
   /* ---------- Greeting ---------- */
-  .greeting p{font-size:15px;color:#5b544c;text-align:center;}
-  .verse{font-size:15px;color:#5b544c;text-align:center;font-style:italic;}
+  .greeting p{font-size:17px;color:#5b544c;text-align:center;}
+  .verse{font-size:17px;color:#5b544c;text-align:center;font-style:italic;}
 
   /* ---------- Couple ---------- */
   .couple-row{
@@ -125,15 +126,15 @@
   /* ---------- Calendar ---------- */
   .cal{background:#fff;border:1px solid var(--line);border-radius:4px;padding:24px 18px;margin-top:8px;}
   .cal table{width:100%;border-collapse:collapse;text-align:center;table-layout:fixed;}
-  .cal th{font-size:12px;color:var(--sub);padding:8px 0;font-weight:400;width:14.28%;}
-  .cal td{font-size:14px;height:38px;padding:0;color:#5b544c;vertical-align:middle;width:14.28%;}
+  .cal th{font-size:13px;color:var(--sub);padding:8px 0;font-weight:400;width:14.28%;}
+  .cal td{font-size:16px;height:42px;padding:0;color:#5b544c;vertical-align:middle;width:14.28%;}
   .cal .sun{color:#c0736b;}
   .cal .mark{position:relative;color:#fff;font-weight:700;}
   .cal .mark span{
     display:inline-flex;width:32px;height:32px;background:var(--accent);
     border-radius:50%;align-items:center;justify-content:center;vertical-align:middle;
   }
-  .dday{text-align:center;margin-top:18px;font-size:14px;color:var(--sub);}
+  .dday{text-align:center;margin-top:18px;font-size:16px;color:var(--sub);}
   .dday b{color:var(--accent);font-weight:700;}
   .countdown{
     display:flex;justify-content:center;gap:10px;margin-top:16px;
@@ -151,7 +152,7 @@
 
   /* ---------- Location ---------- */
   .loc-name{font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:18px;text-align:center;}
-  .loc-addr{text-align:center;font-size:14px;color:var(--sub);margin-top:6px;}
+  .loc-addr{text-align:center;font-size:16px;color:var(--sub);margin-top:6px;}
   .map-embed{margin-top:18px;border:1px solid var(--line);border-radius:4px;overflow:hidden;}
   .map-embed iframe{width:100%;height:220px;border:0;display:block;filter:grayscale(.1);}
   .map-btns{display:flex;gap:8px;margin-top:12px;}
@@ -209,6 +210,7 @@
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+  .photo.filled img{cursor:zoom-in;}
   .hint{
     text-align:center;font-size:12px;color:var(--accent);background:#fbf3e9;
     border:1px dashed var(--accent-soft);border-radius:6px;padding:10px 14px;
@@ -369,6 +371,13 @@
 
 <div class="toast" id="toast"></div>
 
+<!-- 사진 확대 보기 (탭하면 전체화면) -->
+<div id="imgZoom" style="display:none;position:fixed;inset:0;z-index:200;background:rgba(20,17,14,.92);align-items:center;justify-content:center;">
+  <img id="imgZoomImg" src="" alt="" style="max-width:96vw;max-height:92vh;object-fit:contain;border-radius:4px;box-shadow:0 8px 40px rgba(0,0,0,.5);">
+  <div style="position:absolute;top:16px;right:18px;color:#fff;font-size:30px;line-height:1;cursor:pointer;font-family:sans-serif;">&times;</div>
+  <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;color:rgba(255,255,255,.8);font-size:13px;font-family:'Noto Serif KR',serif;">사진을 두 손가락으로 더 크게 볼 수 있어요 · 화면을 누르면 닫힙니다</div>
+</div>
+
 <script>
 /* ---------- Image upload + persistence ---------- */
 function loadSaved(){
@@ -475,6 +484,20 @@ setInterval(function(){
   document.body.appendChild(el);
   setTimeout(function(){el.remove();},12000);
 },1400);
+
+/* ---------- Tap image to zoom (fullscreen) ---------- */
+(function(){
+  var ov=document.getElementById('imgZoom');
+  var oi=document.getElementById('imgZoomImg');
+  document.querySelectorAll('.photo.filled img').forEach(function(im){
+    im.addEventListener('click',function(){
+      oi.src=im.src; ov.style.display='flex';
+      document.body.style.overflow='hidden';
+    });
+  });
+  function closeZoom(){ ov.style.display='none'; oi.src=''; document.body.style.overflow=''; }
+  ov.addEventListener('click',closeZoom);
+})();
 </script>
 </body>
 </html>
